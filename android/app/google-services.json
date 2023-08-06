@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "272939696187",
+    "project_id": "note-mobile-v2-firebase",
+    "storage_bucket": "note-mobile-v2-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272939696187:android:8c3a59b75e7cd3e2879c1e",
+        "android_client_info": {
+          "package_name": "com.example.note_mobile_v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272939696187-9sror4dnedb8ebo2oucjbjc5mrns0urf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8Pfiu2MNdjp9ujfczi7-nfPAfyP1mUHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272939696187-9sror4dnedb8ebo2oucjbjc5mrns0urf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
