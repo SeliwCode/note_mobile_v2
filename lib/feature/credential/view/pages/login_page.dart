@@ -41,6 +41,7 @@ class LoginPage extends StatelessWidget {
   // AppBar
   PreferredSizeWidget get _appBar {
     return AppBar(
+      backgroundColor: Colors.deepPurple,
       title: const Text(
         "Login Page",
       ),
@@ -72,6 +73,7 @@ class LoginPage extends StatelessWidget {
         onPressed: _onPressedLoginButton,
         child: const Text(
           "Giriş yap",
+          style: TextStyle(color: Color.fromARGB(255, 190, 156, 250)),
         ),
       ),
       TextButton(
@@ -80,6 +82,7 @@ class LoginPage extends StatelessWidget {
         },
         child: const Text(
           "Kayıt Ol",
+          style: TextStyle(color: Color.fromARGB(255, 190, 156, 250)),
         ),
       ),
     ];

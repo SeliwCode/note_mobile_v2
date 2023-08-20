@@ -100,6 +100,7 @@ class RegisterPage extends StatelessWidget {
         onPressed: _onPressedRegisterButton,
         child: const Text(
           "Onayla",
+          style: TextStyle(color: Color.fromARGB(255, 190, 156, 250)),
         ),
       ),
     ];

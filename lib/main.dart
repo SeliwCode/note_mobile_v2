@@ -5,10 +5,10 @@ import 'firebase_options.dart';
 import 'core/init/dependency_injection.dart' as dependencyInjection;
 
 void main() async {
- WidgetsFlutterBinding.ensureInitialized();
-  await  Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await dependencyInjection.initialize();
   serviceLocator.allReady().then((value) {
     runApp(const MyApp());

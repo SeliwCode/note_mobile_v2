@@ -1,9 +1,11 @@
 class Note {
-  late final String category;
-  late final String text;
-  late final DateTime creationDate;
+  final String id;
+  final String category;
+  final String text;
+  final DateTime creationDate;
 
-  Note({
+  const Note({
+    required this.id,
     required this.category,
     required this.text,
     required this.creationDate,

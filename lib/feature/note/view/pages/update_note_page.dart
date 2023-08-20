@@ -1,21 +1,32 @@
+import 'dart:developer';
+import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:note_mobile_v2/feature/credential/view/_view_exports.dart';
 import 'package:note_mobile_v2/feature/note/view/pages/note_class.dart';
 import '../../../../core/_core_exports.dart';
-import '../../../credential/controller/credential_controller.dart';
-import '../../controller/note_controller.dart';
-import '../../domain/entities/note_category_type.dart';
-import '_pages_exports.dart';
+import '../../data/model/note_model.dart';
 
-class UpdateNotePage extends StatelessWidget {
+class UpdateNotePage extends StatefulWidget {
   const UpdateNotePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final int noteIndex = Get.arguments as int;  // sayfa arasaında veri iletmek için kullanılır
-    final NoteController noteController = Get.find();
-    final Note nowNote = noteController.notes[noteIndex];
-    final TextEditingController updatedNoteController = TextEditingController(text: nowNote.text);
+  State<UpdateNotePage> createState() => _UpdateNotePageState();
+}
 
+class _UpdateNotePageState extends State<UpdateNotePage> {
+  /// Dependencies
+  late NoteModel note;
+  final TextEditingController textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    note = Get.arguments;
+    textEditingController.text = note.text;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -27,18 +38,17 @@ class UpdateNotePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              controller: updatedNoteController,
+              controller: textEditingController,
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                final updatedNote = Note(
-                  category: nowNote.category,
-                  text: updatedNoteController.text,
-                  creationDate: nowNote.creationDate,
-                );
-                noteController.updateNote(noteIndex, updatedNote);
-                Get.back();
+              onPressed: () async {
+                await FirebaseFirestore.instance.collection('notes').doc(note.id).update({
+                  'text': textEditingController.text.trim(),
+                }).then((value) => {
+                      Get.offAll(() => const HomePage()),
+                      debugPrint("Data Update"),
+                    });
               },
               child: const Text(
                 'Güncelle',

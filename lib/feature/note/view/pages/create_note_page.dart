@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:note_mobile_v2/feature/note/domain/entities/arguments/create_note_params.dart';
 import 'package:note_mobile_v2/feature/note/view/pages/note_class.dart';
-
 import '../../../../core/_core_exports.dart';
 import '../../../_feature_exports.dart';
 
@@ -13,6 +13,7 @@ class CreateNotePage extends StatefulWidget {
 
 class _CreateNotePageState extends State<CreateNotePage> {
   String dates = DateTime.now().toString();
+  final NoteController noteController = Get.find();
 
   // Input fields //Giriş alanları
   List<Widget> get _inputs {
@@ -91,36 +92,36 @@ class _CreateNotePageState extends State<CreateNotePage> {
     ];
   }
 
-  // Tapped create button
-  VoidCallback get _onPressedCreateButton {
-    return () async {
-      await serviceLocator<NoteController>().create();
-    };
-  }
-
   // Buttons
   List<Widget> get _buttons {
     return [
       ElevatedButton(
         onPressed: () async {
-          await FirebaseFirestore.instance.collection('notes').add({
-            'notunKategorileri': serviceLocator<NoteController>().noteCategoryType.toText,
-            'notunMetni': serviceLocator<NoteController>().categoriesController.text,
-            'creation_date': DateTime.now(),
-          }).then((value) {
-            serviceLocator<NoteController>().addNote(Note(
-              category: serviceLocator<NoteController>().noteCategoryType.toText,
-              text: serviceLocator<NoteController>().categoriesController.text,
-              creationDate: DateTime.now(),
-            ));
-            Get.back();
-          });
+          /// Generate identity
+          final String id = FirebaseFirestore.instance.collection("notes").doc().id;
+
+          /// Params
+          final CreateNoteParams createNoteParams = CreateNoteParams(
+            id: id,
+            category: serviceLocator<NoteController>().noteCategoryType.toText,
+            text: serviceLocator<NoteController>().categoriesController.text,
+          );
+
+          /// Send datas to db
+          await FirebaseFirestore.instance.collection('notes').doc(id).set(
+                createNoteParams.toMap(),
+              );
+
+          /// Navigate back
+          Get.back();
         },
-        child:  const Text(
+        child: const Text(
           "Notu Oluştur",
-            style: TextStyle(color: Colors.deepPurple),
+          style: TextStyle(
+            color: Colors.deepPurple,
+          ),
         ),
-      )
+      ),
 
       /*  TextButton(
         onPressed: _onPressedCreateButton,
